@@ -46,7 +46,7 @@ function Get-HealthMetrics {
     }
     $cpuStatus = if ($cpuPercent -ge $Config.CpuCriticalThreshold) {
         "Critical"
-    } elseif ($cpuPercent -ge $Config.CpuThreshold) {
+    } elseif ($cpuPercent -ge $Config.CpuWarningThreshold) {
         "Warning"
     } else {
         "Healthy"
