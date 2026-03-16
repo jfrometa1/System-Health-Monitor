@@ -1,4 +1,4 @@
-<#
+<# 
 .SYNOPSIS
     PowerShell System Health Monitor and Auto-Remediation Tool
 
@@ -13,7 +13,11 @@
     For use in Windows PowerShell 5.1 and later (including PowerShell Core on Windows)
 #>
 
-Get-ChildItem "$PSScriptRoot\*.ps1" | ForEach-Object { . $_.FullName }
+# Use $PWD instead of $PSScriptRoot for testing, but switch back to $PSScriptRoot for production use
+Get-ChildItem "$PSScriptRoot\Functions\*.ps1" | ForEach-Object { . $_.FullName }
+# Get-Command Initialize-HealthMonitor
+# $config = Initialize-HealthMonitor
+# $config | Format-List
 
 # Main Execution Block
 try {

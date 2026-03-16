@@ -22,6 +22,8 @@ RunTime = $runTime
 LogDirectory = $logDirectory
 ReportDirectory = $reportDirectory
 TimeStamp = $timeStamp
+LogFile = Join-Path $logDirectory "HealthLog_$timeStamp.txt"
+HtmlReportFile = Join-Path $reportDirectory "HealthReport_$timeStamp.html"
 }
 
 return $config
