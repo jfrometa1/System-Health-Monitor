@@ -10,8 +10,8 @@ function Get-ServiceHealth {
             [PSCustomObject]@{
                 ServiceName = $service.Name
                 DisplayName = $service.DisplayName
+                OriginalStatus = [string]$service.Status
                 CurrentStatus = [string]$service.Status
-                StartType = "Not Checked"
                 NeedsRemediation = $service.Status -ne 'Running'
                 RemediationAttempted = $false
                 RemediationSucceeded = $false
@@ -28,7 +28,6 @@ function Get-ServiceHealth {
                 ServiceName = $ServiceName
                 DisplayName = $ServiceName
                 CurrentStatus = "Not Found"
-                StartType = "Not Checked"
                 NeedsRemediation = $false
                 RemediationAttempted = $false
                 RemediationSucceeded = $false
