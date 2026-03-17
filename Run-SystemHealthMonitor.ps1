@@ -33,11 +33,15 @@ Get-ChildItem "$PWD\Functions\*.ps1" | ForEach-Object { . $_.FullName }
 # $serviceResults = Get-ServiceHealth -ServiceNames $config.MonitoredServices
 
 # Testing Invoke-ServiceRemediation function
-$config = Initialize-HealthMonitor
-$healthMetrics = Get-HealthMetrics -Config $config
-$serviceResults = Get-ServiceHealth -ServiceNames $config.MonitoredServices
-$serviceResults = Invoke-ServiceRemediation -ServiceResults $serviceResults
-$serviceResults | Format-Table -AutoSize
+# $config = Initialize-HealthMonitor
+# $healthMetrics = Get-HealthMetrics -Config $config
+# $serviceResults = Get-ServiceHealth -ServiceNames $config.MonitoredServices
+# $serviceResults = Invoke-ServiceRemediation -ServiceResults $serviceResults
+# $serviceResults | Format-Table -AutoSize
+
+# Testing Get-RecentEventErrors function
+$events = Get-RecentEventErrors -HoursToCheck 24
+$events | Select-Object -First 10 | Format-Table -AutoSize
 
 # Main Execution Block
 try {
