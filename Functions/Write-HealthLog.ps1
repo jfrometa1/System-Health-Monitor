@@ -21,30 +21,36 @@ function Write-HealthLog {
     $logLines += ""
 
     $logLines += "System Health Metrics:"
-    $logLines += "CPU Usage: $($HealthMetrics.CpuUsage)% [$($HealthMetrics.CpuStatus)]"
-    $logLines += "Memory Usage: $($HealthMetrics.MemoryUsage)% [$($HealthMetrics.MemoryStatus)]"
+    $logLines += "CPU Usage: $($HealthMetrics.CpuPercent)% [$($HealthMetrics.CpuStatus)]"
+    $logLines += "Memory Usage: $($HealthMetrics.PercentUsed)% [$($HealthMetrics.Status)]"
     $logLines += ""
 
     $logLines += "Disk Usage:"
     foreach ($disk in $HealthMetrics.DiskResults) {
-        $logLines += " - Drive $($disk.DriveLetter): $($disk.UsedGB)GB used of $($disk.TotalGB)GB ($($disk.FreePercent)% free) `
-        | [$($disk.Status)]"
+        $logLines += " - Drive $($disk.DriveLetter) $($disk.SizeGB - $disk.FreeGB)GB used of $($disk.SizeGB)GB ($($disk.PercentFree)% free) | [$($disk.Status)]"
     }
     $logLines += ""
 
     $logLines += "Service Results:"
     foreach ($service in $ServiceResults) {
-        $logLines += "Service: $($service.ServiceName) | Original Status: $($service.OriginalStatus) | Current Status: $($service.Status) `
-        | Remediation Needed: $($service.RemediationNeeded) | Remediation Attempted: $($service.RemediationAttempted) `
-        | Remediation Success: $($service.RemediationSuccess) | Notes: $($service.Notes)"
+        if ($service.RemediationNeeded) {
+            $logLines += "Service: $($service.ServiceName) requires remediation. `
+            Attempted: $($service.RemediationAttempted) `
+            Success: $($service.RemediationSuccess) `
+            Notes: $($service.Notes)"
+        }
+         else {
+            $logLines += "Service: $($service.ServiceName) is healthy. `
+            Status: $($service.Status)"
+        }
     }
     $logLines += ""
 
     $logLines += "Recent Event Errors:"
     if ($EventResults.Count -ge 0) {
-              foreach ($event in $EventResults) {
-            $logLines += "Log: $($event.LogName) | Time: $($event.Time) | ID: $($event.EventId) | Provider: $($event.ProviderName) `
-            | Message: $($event.Message)"
+              foreach ($e in $EventResults) {
+            $logLines += "Log: $($e.LogName) | Time: $($e.Time) | ID: $($e.EventId) | Provider: $($e.ProviderName) `
+            Message: $($e.Message)"
         }
     } 
     else { 
@@ -53,5 +59,5 @@ function Write-HealthLog {
     $logLines += ""
     $logLines += "=============================================="
 
-    $logLines | Out-File -Append "$($Config.LogFile)\SystemHealthLog.txt"
+    $logLines | Out-File -Append "$($Config.LogFile)"
 }
