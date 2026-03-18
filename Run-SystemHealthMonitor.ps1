@@ -40,8 +40,17 @@ Get-ChildItem "$PWD\Functions\*.ps1" | ForEach-Object { . $_.FullName }
 # $serviceResults | Format-Table -AutoSize
 
 # Testing Get-RecentEventErrors function
-$events = Get-RecentEventErrors -HoursToCheck 24
-$events | Select-Object -First 10 | Format-Table -AutoSize
+# $events = Get-RecentEventErrors -HoursToCheck 24
+# $events | Select-Object -First 10 | Format-Table -AutoSize
+
+# Testing Get-OverallStatus function
+# $config = Initialize-HealthMonitor
+# $healthMetrics = Get-HealthMetrics -Config $config
+# $serviceResults = Get-ServiceHealth -ServiceNames $config.MonitoredServices
+# $serviceResults = Invoke-ServiceRemediation -ServiceResults $serviceResults
+# $EventResults = Get-RecentEventErrors -HoursToCheck 24
+# $overallStatus = Get-OverallStatus -HealthMetrics $healthMetrics -ServiceResults $serviceResults -EventResults $EventResults
+# $overallStatus | Format-List
 
 # Main Execution Block
 try {
