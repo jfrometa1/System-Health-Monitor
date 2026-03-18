@@ -9,7 +9,7 @@ function Get-RecentEventErrors {
         "System",
         "Application"
     )
-    $eventResults = foreach ($log in $eventLogs) {
+    $errorEvents = foreach ($log in $eventLogs) {
         try{
             Get-WinEvent -FilterHashtable @{
                 LogName = $log
@@ -36,5 +36,36 @@ function Get-RecentEventErrors {
             Write-Warning "Failed to retrieve events from $log log: $($_.Exception.Message)"
         }
     }
+
+    # Check for unexpected reboots (Event ID 6008 in System log)
+    $rebootEvents = try {
+        Get-WinEvent -FilterHashtable @{
+            LogName = "System"
+            Id = 6008
+            StartTime = $startTime } -ErrorAction Stop |
+        Select-Object @{
+            Name = "LogName"
+            Expression = { $_.LogName }
+        }, @{
+            Name = "TimeCreated"
+            Expression = { $_.TimeCreated }
+        }, @{
+            Name = "Id"
+            Expression = { $_.Id }
+        }, @{
+            Name = "ProviderName"
+            Expression = { $_.ProviderName }
+        }, @{
+            Name = "Message"
+            Expression = { $_.Message }
+        }
+    }
+    catch {
+        Write-Warning "Failed to retrieve unexpected reboot events: $($_.Exception.Message)"
+        @()
+    }
+    
+    $eventResults = @($errorEvents) + @($rebootEvents) | Sort-Object TimeCreated -Descending
+
     return $eventResults
 }
