@@ -63,11 +63,16 @@ function Get-OverallStatus {
     # Check Event Log Errors
     if ($EventResults.Count -ge 10) {
         $overallStatus = "Critical"
-        $reasons += "10 or more recent error events were found"
+        $reasons += "$($EventResults.Count) recent error events were found"
     }
     elseif ($EventResults.Count -ge 1 -and $overallStatus -ne "Critical") {
         $overallStatus = "Warning"
-        $reasons += "1 or more recent error events were found."
+        if ($EventResults.Count -eq 1) {
+            $reasons += "1 recent error event was found."
+        }
+        else {
+            $reasons += "$($EventResults.Count) recent error events were found."
+        }
     }
     if (-not $reasons) {
         $reasons += "No issues detected."

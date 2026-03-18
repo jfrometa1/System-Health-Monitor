@@ -61,8 +61,10 @@ function Get-RecentEventErrors {
         }
     }
     catch {
-        Write-Warning "Failed to retrieve unexpected reboot events: $($_.Exception.Message)"
-        @()
+        if ($_.Exception.Message -notlike "*No events were found*") {
+            Write-Warning "Failed to retrieve unexpected reboot events: $($_.Exception.Message)"
+        }
+         $rebootEvents = @()
     }
     
     $eventResults = @($errorEvents) + @($rebootEvents) | Sort-Object TimeCreated -Descending

@@ -70,7 +70,9 @@ try {
     $healthMetrics = Get-HealthMetrics -Config $config
 
     # Step 3: Check monitored services
-    $serviceResults = Get-ServiceHealth -ServiceNames $config.MonitoredServices
+    $serviceResults = Get-ServiceHealth `
+    -ServiceNames $config.MonitoredServices `
+    -IncludeAutomatic
 
     # Step 4: Attempt remediation if requested
     if ($Remediate) {
