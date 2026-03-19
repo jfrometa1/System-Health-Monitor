@@ -13,44 +13,7 @@
     For use in Windows PowerShell 5.1 and later (including PowerShell Core on Windows)
 #>
 
-# Testing Code
-
-# Testing Initialize-HealthMonitor function
-# Get-Command Initialize-HealthMonitor
-# $config = Initialize-HealthMonitor
-# $config | Format-List
-
-#Testing Get-HealthMetrics function
-# $config = Initialize-HealthMonitor
-# $healthMetrics = Get-HealthMetrics -Config $config
-# $healthMetrics | Format-List
-# $healthMetrics.DiskResults | Format-Table -AutoSize
-
-# Testing Get-ServiceHealth function
-# $config = Initialize-HealthMonitor
-# $serviceResults = Get-ServiceHealth -ServiceNames $config.MonitoredServices
-
-# Testing Invoke-ServiceRemediation function
-# $config = Initialize-HealthMonitor
-# $healthMetrics = Get-HealthMetrics -Config $config
-# $serviceResults = Get-ServiceHealth -ServiceNames $config.MonitoredServices
-# $serviceResults = Invoke-ServiceRemediation -ServiceResults $serviceResults
-# $serviceResults | Format-Table -AutoSize
-
-# Testing Get-RecentEventErrors function
-# $events = Get-RecentEventErrors -HoursToCheck $HoursToCheck
-# $events | Select-Object -First 10 | Format-Table -AutoSize
-
-# Testing Get-OverallStatus function
-# $config = Initialize-HealthMonitor
-# $healthMetrics = Get-HealthMetrics -Config $config
-# $serviceResults = Get-ServiceHealth -ServiceNames $config.MonitoredServices
-# $serviceResults = Invoke-ServiceRemediation -ServiceResults $serviceResults
-# $EventResults = Get-RecentEventErrors -HoursToCheck $HoursToCheck
-# $overallStatus = Get-OverallStatus -HealthMetrics $healthMetrics -ServiceResults $serviceResults -EventResults $EventResults
-# $overallStatus | Format-List
-
-# Use $PWD instead of $PSScriptRoot for testing, but switch back to $PSScriptRoot for production use
+# Use $PWD instead of $PSScriptRoot for manually running, but $PSScriptRoot for scheduled script use
 [CmdletBinding()]
 param(
     [string]$ComputerName = $env:COMPUTERNAME,
@@ -86,7 +49,7 @@ try {
     }
 
     # Step 5: Get recent event log errors
-    $eventResults = Get-RecentEventErrors -HoursToCheck $HoursToCheck
+    $eventResults = @(Get-RecentEventErrors -HoursToCheck $HoursToCheck)
 
     # Step 6: Determine overall health status
     $overallStatus = Get-OverallStatus `

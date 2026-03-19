@@ -7,8 +7,8 @@ function Get-OverallStatus {
         [Parameter(Mandatory=$true)]
         [object[]]$ServiceResults,
 
-        [Parameter(Mandatory=$true)]
-        [object[]]$EventResults
+        [Parameter(Mandatory=$false)]
+        [object[]]$EventResults = @()
     )
 
     $overallStatus = "Healthy"

@@ -20,13 +20,11 @@ function Invoke-ServiceRemediation {
                         break
                     } 
                 }
-
                 if (-not $serviceResult.RemediationSucceeded) {
                         $serviceResult.RemediationSucceeded = $false
                         $serviceResult.Notes = "Restart attempted but service is still not running."
                 }
             }
-
             catch {
                 $serviceResult.RemediationSucceeded = $false
                 $serviceResult.Notes = "Failed to restart service: $($_.Exception.Message)"

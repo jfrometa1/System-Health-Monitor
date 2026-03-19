@@ -18,7 +18,7 @@ function Get-ServiceHealth {
                 CurrentStatus = [string]$service.Status
                 NeedsRemediation = $service.Status -ne 'Running'
                 RemediationAttempted = $false
-                RemediationSucceeded = $false
+                RemediationSucceeded = $null
                 Notes = if($service.Status -eq 'Running') {
                     "Service is running."
                 } 
@@ -34,8 +34,8 @@ function Get-ServiceHealth {
                 OriginalStatus = "Not Found"
                 CurrentStatus = "Not Found"
                 NeedsRemediation = $false
-                RemediationAttempted = $false
-                RemediationSucceeded = $false
+                RemediationAttempted = $null
+                RemediationSucceeded = $""
                 Notes = "Service not found."
             }
         }
@@ -52,7 +52,7 @@ function Get-ServiceHealth {
                 CurrentStatus = [string]$service.Status
                 NeedsRemediation = $true
                 RemediationAttempted = $false
-                RemediationSucceeded = $false
+                RemediationSucceeded = $null
                 Notes = "Automatic service is not running."
             }
         }
