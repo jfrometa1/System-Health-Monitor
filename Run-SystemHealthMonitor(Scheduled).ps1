@@ -28,7 +28,7 @@ try {
     Get-ChildItem "$PSScriptRoot\Functions\*.ps1" | ForEach-Object { . $_.FullName }
 
     # Step 1: Initialize configuration and paths
-    $config = Initialize-HealthMonitor
+    $config = Initialize-HealthMonitor -ComputerName $ComputerName
 
     # Step 2: Collect health metrics
     $healthMetrics = Get-HealthMetrics -Config $config
@@ -49,7 +49,7 @@ try {
     }
 
     # Step 5: Get recent event log errors
-    $eventResults = Get-RecentEventErrors -HoursToCheck $HoursToCheck
+    $eventResults = @(Get-RecentEventErrors -HoursToCheck $HoursToCheck)
 
     # Step 6: Determine overall health status
     $overallStatus = Get-OverallStatus `

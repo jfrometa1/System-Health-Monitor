@@ -35,7 +35,7 @@ function Get-ServiceHealth {
                 CurrentStatus = "Not Found"
                 NeedsRemediation = $false
                 RemediationAttempted = $null
-                RemediationSucceeded = $""
+                RemediationSucceeded = $null
                 Notes = "Service not found."
             }
         }

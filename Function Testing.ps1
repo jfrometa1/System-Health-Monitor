@@ -42,16 +42,16 @@
 # $overallStatus | Format-List
 
 # Testing Write-HealthLog function
-Get-ChildItem "$PWD\Functions\*.ps1" | ForEach-Object { . $_.FullName }
-$config = Initialize-HealthMonitor
-$healthMetrics = Get-HealthMetrics -Config $config
-$serviceResults = Get-ServiceHealth -ServiceNames $config.MonitoredServices
-$serviceResults = Invoke-ServiceRemediation -ServiceResults $serviceResults
-$eventResults = @(Get-RecentEventErrors -HoursToCheck 24)
-$overallStatus = Get-OverallStatus -HealthMetrics $healthMetrics -ServiceResults $serviceResults -EventResults $eventResults
-Write-HealthLog `
--Config $config `
--HealthMetrics $healthMetrics `
--ServiceResults $serviceResults `
--EventResults $eventResults `
--OverallStatus $overallStatus
+# Get-ChildItem "$PWD\Functions\*.ps1" | ForEach-Object { . $_.FullName }
+# $config = Initialize-HealthMonitor
+# $healthMetrics = Get-HealthMetrics -Config $config
+# $serviceResults = Get-ServiceHealth -ServiceNames $config.MonitoredServices
+# $serviceResults = Invoke-ServiceRemediation -ServiceResults $serviceResults
+# $eventResults = @(Get-RecentEventErrors -HoursToCheck 24)
+# $overallStatus = Get-OverallStatus -HealthMetrics $healthMetrics -ServiceResults $serviceResults -EventResults $eventResults
+# Write-HealthLog `
+# -Config $config `
+# -HealthMetrics $healthMetrics `
+# -ServiceResults $serviceResults `
+# -EventResults $eventResults `
+# -OverallStatus $overallStatus

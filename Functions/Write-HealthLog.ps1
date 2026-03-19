@@ -9,8 +9,7 @@ function Write-HealthLog {
         [Parameter(Mandatory = $true)]
         [PSCustomObject[]]$ServiceResults,
 
-        [Parameter(Mandatory = $true)]
-        [PSCustomObject[]]$EventResults,
+        [PSCustomObject[]]$EventResults = @(),
         
         [Parameter(Mandatory = $true)]
         [PSCustomObject]$OverallStatus
