@@ -4,8 +4,8 @@
 
 .DESCRIPTION
     Checks local system health metrics, verifies monitored services,
-    attempts basic remediation, reviews recent event log errors,
-    writes a log file, and generates an HTML report.
+    attempts basic remediation, reviews recent event log errors, and
+    writes a log file.
 
 .NOTES
     Author: Josh Frometa
